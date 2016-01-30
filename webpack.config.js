@@ -1,5 +1,8 @@
+const path = require('path');
+
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,7 +13,7 @@ module.exports = {
     ],
   },
   output: {
-    path: `${__dirname}/build`,
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   module: {
@@ -22,6 +25,16 @@ module.exports = {
         query: {
           presets: ['es2015', 'react'],
         },
+      }, {
+        test: /.css?$/,
+        loader: ExtractTextPlugin.extract('style', 'css'),
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file',
+        query: {
+          name: 'assets/[name].[ext]',
+        },
       },
     ],
   },
@@ -31,5 +44,6 @@ module.exports = {
       template: 'src/index.html',
       inject: 'body',
     }),
+    new ExtractTextPlugin('style.css'),
   ],
 };
