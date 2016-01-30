@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { CV } from './components/cv.jsx';
 
-React.render(
+ReactDOM.render(
   <CV/>,
   document.getElementById('app')
 );
